@@ -1,13 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gmail_integration/google_sign_in_provider.dart';
+import 'package:gmail_integration/home_page.dart';
 
-import 'my_home_page.dart';
-
-void main() {
-  runApp(MyApp());
+Future main() async {
+  final signInProvider = await GoogleSignInProvider();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(ProviderScope(
+      // overrides: [
+      //   GoogleSignInProvider(),
+      // ],
+      child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: HomePage(),
     );
   }
 }
